@@ -3,7 +3,8 @@ from mysql.connector import Error
 
 
 def get_connection():
-    my_connection = mysql.connector.connect(host="localhost", user="root", password="1111", database="Project_3")
+    my_connection = mysql.connector.connect(
+        host="localhost", user="root", password="1111", database="Project_3")
     return my_connection
 
 
@@ -54,4 +55,89 @@ def get_hospital_detail(hospital_id):
             print("MySQL connection is closed")
 
 
-get_hospital_detail(2)
+def get_doctor_detail(doctor_id):
+    global connection, cursor
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        sql_select_query = 'select * from Doctor where Doctor_ID = %s'
+        cursor.execute(sql_select_query, (doctor_id,))
+        record = cursor.fetchall()
+
+        for row in record:
+            print("Doctor_ID = ", row[0], )
+            print("Doctor_Name = ", row[1])
+            print("Hospital_ID = ", row[2])
+            print("Joining_Date = ", row[3])
+            print("Speciality = ", row[4])
+            print("Salary = ", row[5])
+            print("Experience = ", row[6], "\n")
+
+        close_connection(connection)
+    except mysql.connector.Error as error:
+        print("Failed to get record from MySQL table: {}".format(error))
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+
+def get_specialist_doctors_list(speciality, salary):
+    global connection, cursor
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        sql_select_query = 'select * from Doctor where Speciality = %s and Salary = %s;'
+        cursor.execute(sql_select_query, (speciality, salary,))
+        record = cursor.fetchall()
+
+        for row in record:
+            print("Doctor_ID = ", row[0], )
+            print("Doctor_Name = ", row[1])
+            print("Hospital_ID = ", row[2])
+            print("Joining_Date = ", row[3])
+            print("Speciality = ", row[4])
+            print("Salary = ", row[5])
+            print("Experience = ", row[6], "\n")
+
+        close_connection(connection)
+    except mysql.connector.Error as error:
+        print("Failed to get record from MySQL table: {}".format(error))
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+
+def get_doctors(hospital_id):
+    global connection, cursor
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        sql_select_query = 'select * from Doctor where Hospital_ID = %s'
+        cursor.execute(sql_select_query, (hospital_id,))
+        record = cursor.fetchall()
+
+        for row in record:
+            print("Doctor_ID = ", row[0], )
+            print("Doctor_Name = ", row[1])
+            print("Hospital_ID = ", row[2])
+            print("Joining_Date = ", row[3])
+            print("Speciality = ", row[4])
+            print("Salary = ", row[5])
+            print("Experience = ", row[6], "\n")
+
+        close_connection(connection)
+    except mysql.connector.Error as error:
+        print("Failed to get record from MySQL table: {}".format(error))
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
