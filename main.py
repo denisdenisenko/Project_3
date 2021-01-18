@@ -141,3 +141,70 @@ def get_doctors(hospital_id):
             connection.close()
             print("MySQL connection is closed")
 
+
+def update_doctor_experience(exp, doctor_id):
+    global connection, cursor
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        sql_select_query = 'UPDATE Doctor SET Experience = %s WHERE Doctor_ID =  %s;'
+        cursor.execute(sql_select_query, (exp, doctor_id,))
+
+        sql_select_query = 'Select * From Doctor Where Doctor_ID = %s'
+        cursor.execute(sql_select_query, (doctor_id,))
+
+        record = cursor.fetchall()
+
+        for row in record:
+            print("Doctor_ID = ", row[0], )
+            print("Doctor_Name = ", row[1])
+            print("Hospital_ID = ", row[2])
+            print("Joining_Date = ", row[3])
+            print("Speciality = ", row[4])
+            print("Salary = ", row[5])
+            print("Experience = ", row[6], "\n")
+
+        close_connection(connection)
+    except mysql.connector.Error as error:
+        print("Failed to get record from MySQL table: {}".format(error))
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+
+update_doctor_experience(13, 102)
+
+def doctors_in_hospital (hospital_name):
+    global connection, cursor
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        sql_select_query = 'UPDATE Doctor SET Experience = %s WHERE Doctor_ID =  %s;'
+        cursor.execute(sql_select_query, (hospital_name,))
+
+        sql_select_query = 'Select * From Doctor Where Doctor_ID = %s'
+        cursor.execute(sql_select_query, (hospital_name,))
+
+        record = cursor.fetchall()
+
+        for row in record:
+            print("Doctor_ID = ", row[0], )
+            print("Doctor_Name = ", row[1])
+            print("Hospital_ID = ", row[2])
+            print("Joining_Date = ", row[3])
+            print("Speciality = ", row[4])
+            print("Salary = ", row[5])
+            print("Experience = ", row[6], "\n")
+
+        close_connection(connection)
+    except mysql.connector.Error as error:
+        print("Failed to get record from MySQL table: {}".format(error))
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
