@@ -182,7 +182,7 @@ def doctors_in_hospital (hospital_name):
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        sql_select_query = 'UPDATE Doctor SET Experience = %s WHERE Doctor_ID =  %s;'
+        sql_select_query = 'Create table  *****   %s;'
         cursor.execute(sql_select_query, (hospital_name,))
 
         sql_select_query = 'Select * From Doctor Where Doctor_ID = %s'
