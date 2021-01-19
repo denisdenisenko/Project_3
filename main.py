@@ -45,6 +45,12 @@ def read_database_version():
 
 
 def get_hospital_detail(hospital_id):
+    """
+    this function takes a hospital id as an arguments
+    and prints all its data that stored in columns
+    :param hospital_id:
+    :return:
+    """
     global connection, cursor
     try:
         connection = get_connection()
@@ -69,6 +75,12 @@ def get_hospital_detail(hospital_id):
 
 
 def get_doctor_detail(doctor_id):
+    """
+    this function gets doctor id as an arguments
+    and prints the details of this doctor
+    :param doctor_id:
+    :return:
+    """
     global connection, cursor
     try:
         connection = get_connection()
@@ -98,6 +110,13 @@ def get_doctor_detail(doctor_id):
 
 
 def get_specialist_doctors_list(speciality, salary):
+    """
+    this function gets 2 parameters and prints
+    the iformation of doctors by given speciality and salary
+    :param speciality:
+    :param salary:
+    :return:
+    """
     global connection, cursor
     try:
         connection = get_connection()
@@ -127,6 +146,12 @@ def get_specialist_doctors_list(speciality, salary):
 
 
 def get_doctors(hospital_id):
+    """
+    this function gets hospital id
+    and prints all doctors who work there
+    :param hospital_id:
+    :return:
+    """
     global connection, cursor
     try:
         connection = get_connection()
@@ -156,6 +181,12 @@ def get_doctors(hospital_id):
 
 
 def update_doctor_experience(exp, doctor_id):
+    """
+    this function updates doctor's experience by given id
+    :param exp:
+    :param doctor_id:
+    :return:
+    """
     global connection, cursor
     try:
         connection = get_connection()
@@ -189,10 +220,21 @@ def update_doctor_experience(exp, doctor_id):
 
 
 def new_table_doctors_in_hospital(hospital_name):
+    """
+    this function creates new table named "new_table"
+    and puts there all the doctors who works in the given hospital
+    dont forget tho erase "new_table if you have one"
+    :param hospital_name:
+    :return:
+    """
     global connection, cursor
     try:
         connection = get_connection()
         cursor = connection.cursor()
+
+        # sql_select_query = ' drop table new_table'
+        # cursor.execute(sql_select_query)
+
         sql_select_query = ' select hospital_ID from hospital  where hospital_name = %s;'
         cursor.execute(sql_select_query, (hospital_name,))
 
@@ -201,7 +243,7 @@ def new_table_doctors_in_hospital(hospital_name):
         fetched_hospital_id = record[0]
         print(fetched_hospital_id)
 
-        # Choose different table name
+        # Choose different table name od delete
         sql_select_query = 'CREATE TABLE new_table ' \
                            'SELECT Doctor_ID, Doctor_Name, Hospital_ID,Joining_Date,Speciality,Salary,Experience ' \
                            'FROM Doctor ' \
@@ -233,5 +275,24 @@ def new_table_doctors_in_hospital(hospital_name):
             connection.close()
             print("MySQL connection is closed")
 
-
+print("Q1 \n")
+read_database_version()
+print("*" * 50)
+print("Q2 \n")
+get_hospital_detail(2)
+print("*" * 50)
+print("Q2 \n")
+get_doctor_detail(105)
+print("*" * 50)
+print("Q3 \n")
+get_specialist_doctors_list("Garnacologist", 25000)
+print("*" * 50)
+print("Q4 \n")
+get_doctors(2)
+print("*" * 50)
+print("Q5 \n")
+update_doctor_experience(10, 2)
+print("*" * 50)
+print("Q6 \n")
+# drop table "new_table if you already run that script"
 new_table_doctors_in_hospital("Cleveland Clinic")
